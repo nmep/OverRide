@@ -3,19 +3,22 @@
    0x0000000000400818 <+4>:	sub    rsp,0x120
    0x000000000040081f <+11>:	mov    DWORD PTR [rbp-0x114],edi
    0x0000000000400825 <+17>:	mov    QWORD PTR [rbp-0x120],rsi
+
    0x000000000040082c <+24>:	lea    rdx,[rbp-0x70]
    0x0000000000400830 <+28>:	mov    eax,0x0
    0x0000000000400835 <+33>:	mov    ecx,0xc
    0x000000000040083a <+38>:	mov    rdi,rdx
-   0x000000000040083d <+41>:	rep stos QWORD PTR [rdi],rax
+   0x000000000040083d <+41>:	rep stos QWORD PTR [rdi],rax; char buffer1[11] = {0};
+
    0x0000000000400840 <+44>:	mov    rdx,rdi
    0x0000000000400843 <+47>:	mov    DWORD PTR [rdx],eax
    0x0000000000400845 <+49>:	add    rdx,0x4
    0x0000000000400849 <+53>:	lea    rdx,[rbp-0xa0]
    0x0000000000400850 <+60>:	mov    eax,0x0
    0x0000000000400855 <+65>:	mov    ecx,0x5
-   0x000000000040085a <+70>:	mov    rdi,rdx
-   0x000000000040085d <+73>:	rep stos QWORD PTR [rdi],rax
+   0x000000000040085a <+70>:	mov    rdi,rdx   
+   0x000000000040085d <+73>:	rep stos QWORD PTR [rdi],rax; char buffer2[5] = {0};
+   
    0x0000000000400860 <+76>:	mov    rdx,rdi
    0x0000000000400863 <+79>:	mov    BYTE PTR [rdx],al
    0x0000000000400865 <+81>:	add    rdx,0x1
@@ -23,7 +26,8 @@
    0x0000000000400870 <+92>:	mov    eax,0x0
    0x0000000000400875 <+97>:	mov    ecx,0xc
    0x000000000040087a <+102>:	mov    rdi,rdx
-   0x000000000040087d <+105>:	rep stos QWORD PTR [rdi],rax
+   0x000000000040087d <+105>:	rep stos QWORD PTR [rdi],rax; char buffer3[11] = {0};
+
    0x0000000000400880 <+108>:	mov    rdx,rdi
    0x0000000000400883 <+111>:	mov    DWORD PTR [rdx],eax
    0x0000000000400885 <+113>:	add    rdx,0x4
@@ -35,7 +39,7 @@
    0x00000000004008a5 <+145>:	mov    rdi,rax
    0x00000000004008a8 <+148>:	call   0x400700 <fopen@plt>
    0x00000000004008ad <+153>:	mov    QWORD PTR [rbp-0x8],rax
-   0x00000000004008b1 <+157>:	cmp    QWORD PTR [rbp-0x8],0x0
+   0x00000000004008b1 <+157>:	cmp    QWORD PTR [rbp-0x8],0x0; if (!fopen("/home/user/level03", "r"))
 
    0x00000000004008b6 <+162>:	jne    0x4008e6 <main+210>
    0x00000000004008b8 <+164>:	mov    rax,QWORD PTR [rip+0x200991]        # 0x601250 <stderr@@GLIBC_2.2.5>
@@ -47,7 +51,8 @@
    0x00000000004008d4 <+192>:	mov    rdi,rax
    0x00000000004008d7 <+195>:	call   0x400720 <fwrite@plt>
    0x00000000004008dc <+200>:	mov    edi,0x1
-   0x00000000004008e1 <+205>:	call   0x400710 <exit@plt>
+   0x00000000004008e1 <+205>:	call   0x400710 <exit@plt>;         fwrite("ERROR: failed to open password file\n", 24, stderr);
+                                                                  exit(1);
 
    0x00000000004008e6 <+210>:	lea    rax,[rbp-0xa0]
    0x00000000004008ed <+217>:	mov    rdx,QWORD PTR [rbp-0x8]
@@ -56,6 +61,7 @@
    0x00000000004008f9 <+229>:	mov    esi,0x1
    0x00000000004008fe <+234>:	mov    rdi,rax
    0x0000000000400901 <+237>:	call   0x400690 <fread@plt>
+
    0x0000000000400906 <+242>:	mov    DWORD PTR [rbp-0xc],eax
    0x0000000000400909 <+245>:	lea    rax,[rbp-0xa0]
    0x0000000000400910 <+252>:	mov    esi,0x400bf5
@@ -154,4 +160,3 @@
    0x0000000000400aac <+664>:	call   0x400680 <puts@plt>
    0x0000000000400ab1 <+669>:	mov    edi,0x1
    0x0000000000400ab6 <+674>:	call   0x400710 <exit@plt>
-
