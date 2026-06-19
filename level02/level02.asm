@@ -8,7 +8,7 @@ lea    rdx, [rbp-0x70]
 mov    eax, 0x0
 mov    ecx, 0xc
 mov    rdi, rdx
-rep stos QWORD PTR [rdi], rax ; char buffer[12] = {0}
+rep stos QWORD PTR [rdi], rax ; char username[12] = {0}
 
 mov    rdx, rdi
 mov    DWORD PTR [rdx], eax
@@ -22,11 +22,11 @@ rep stos QWORD PTR [rdi], rax ; char pass_file_text[5] = {0}
 mov    rdx, rdi
 mov    BYTE PTR [rdx], al
 add    rdx, 0x1
-lea    rdx, [rbp-0x110]
+lea    rdx, [rbp-0x110]; password
 mov    eax, 0x0
 mov    ecx, 0xc
 mov    rdi, rdx
-rep stos QWORD PTR [rdi], rax ; char pass_file_text[12] = {0}
+rep stos QWORD PTR [rdi], rax ; char password[12] = {0}
 
 mov    rdx, rdi
 mov    DWORD PTR [rdx], eax
@@ -63,7 +63,7 @@ mov    esi, 0x1
 mov    rdi, rax; pass_file_text -> #1 arg
 call   0x400690 <fread@plt>; fread(pass_file_text,  1,  29,  fd_pass_file);
 mov    DWORD PTR [rbp-0xc], eax; level3_pass_len = fread()
-lea    rax, [rbp-0xa0]
+lea    rax, [rbp-0xa0]; pass_file_text
 mov    esi, 0x400bf5; "\n"
 mov    rdi, rax; pass_file_text
 call   0x4006d0 <strcspn@plt>; 
@@ -71,6 +71,7 @@ mov    BYTE PTR [rbp+rax*1-0xa0], 0x0; pass_file_text[rax] = 0;
 cmp    DWORD PTR [rbp-0xc], 0x29; level3_pass_len == 29 
 
 je     0x40097d <main+361>
+
 
 mov    rax, QWORD PTR [rip+0x20091e]        # 0x601250 <stderr@@GLIBC_2.2.5>
 mov    rdx, rax
@@ -118,7 +119,7 @@ mov    rdi, rax
 call   0x4006f0 <fgets@plt>; fgets(username, 100, stdin);
 lea    rax, [rbp-0x70]; username
 mov    esi, 0x400bf5; "\n"
-mov    rdi, rax; userna;e
+mov    rdi, rax; username
 call   0x4006d0 <strcspn@plt>
 mov    BYTE PTR [rbp+rax*1-0x70], 0x0
 ; var = strcspn(username, "\n");
@@ -127,23 +128,23 @@ mov    BYTE PTR [rbp+rax*1-0x70], 0x0
 mov    eax, 0x400ce8; "--[ Password: "
 mov    rdi, rax
 mov    eax, 0x0
-call   0x4006c0 <printf@plt>
+call   0x4006c0 <printf@plt>; printf("--[ Password: ");
 mov    rax, QWORD PTR [rip+0x20083b]        # 0x601248 <stdin@@GLIBC_2.2.5>
 mov    rdx, rax
-lea    rax, [rbp-0x110]
-mov    esi, 0x64
+lea    rax, [rbp-0x110]; password buffer
+mov    esi, 0x64; 100
 mov    rdi, rax
-call   0x4006f0 <fgets@plt>
+call   0x4006f0 <fgets@plt>; fgets(password, 100, stdin); 
 lea    rax, [rbp-0x110]
-mov    esi, 0x400bf5
+mov    esi, 0x400bf5; "\n"
 mov    rdi, rax
-call   0x4006d0 <strcspn@plt>
-mov    BYTE PTR [rbp+rax*1-0x110], 0x0
+call   0x4006d0 <strcspn@plt>; strcspn(password, "\n")
+mov    BYTE PTR [rbp+rax*1-0x110], 0x0; password[rax] = 0;
 mov    edi, 0x400cf8
 call   0x400680 <puts@plt>
-lea    rcx, [rbp-0x110]
-lea    rax, [rbp-0xa0]
-mov    edx, 0x29
+lea    rcx, [rbp-0x110]; password
+lea    rax, [rbp-0xa0]; pass_file_text
+mov    edx, 0x29; 41
 mov    rsi, rcx
 mov    rdi, rax
 call   0x400670 <strncmp@plt>

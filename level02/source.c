@@ -3,10 +3,9 @@
 
 int main()
 {
-    char username[12] = {0};
-    char pass_file_text[5] = {0};
-    char buffer3[12] = {0};
-
+    char username[12] = {0}; // 0x70
+    char pass_file_text[5] = {0}; // 0xa0
+    char password[12] = {0}; // 0x110
     int fd_pass_file = 0; // rbp-0x8
     int level3_pass_len = 0; // rbp-0xc
 
@@ -16,9 +15,9 @@ int main()
         fwrite("ERROR: failed to open password file\n", 24, stderr);
         exit(1);
     }
-    
+
     level3_pass_len = fread(pass_file_text, 1, 29, fd_pass_file);
-    
+
     int var = strcspn(pass_file_text, "\n");
 
     pass_file_text[var] = 0;
@@ -39,6 +38,11 @@ int main()
 
     var = strcspn(username, "\n");
     username[var] = 0;
+
+    printf("--[ Password: ");
+    fgets(password, 100, stdin);
+    int res = strcspn(password, "\n");
+    password[res] = 0;
 
     
 }
