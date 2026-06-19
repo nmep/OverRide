@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
-    char buffer[12] = {0};
+    char username[12] = {0};
     char pass_file_text[5] = {0};
     char buffer3[12] = {0};
 
@@ -15,7 +16,29 @@ int main()
         fwrite("ERROR: failed to open password file\n", 24, stderr);
         exit(1);
     }
+    
+    level3_pass_len = fread(pass_file_text, 1, 29, fd_pass_file);
+    
+    int var = strcspn(pass_file_text, "\n");
 
-    fread(pass_file_text, 1, 29, fd_pass_file);
+    pass_file_text[var] = 0;
+    if (var != 29)
+    {
+        fwrite("ERROR: failed to read password file\n", 24 ,stderr);
+        exit(1);
+    }
 
+    fclose(fd_pass_file);
+    puts("===== [ Secure Access System v1.0 ] =====");
+    puts("/***************************************\\");
+    puts("| You must login to access this system. |");
+    puts("/***************************************\\");
+    printf("--[ Username: ");
+
+    fgets(username, 100, stdin);
+
+    var = strcspn(username, "\n");
+    username[var] = 0;
+
+    
 }
