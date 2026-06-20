@@ -72,7 +72,6 @@ cmp    DWORD PTR [rbp-0xc], 0x29; level3_pass_len == 29
 
 je     0x40097d <main+361>
 
-
 mov    rax, QWORD PTR [rip+0x20091e]        # 0x601250 <stderr@@GLIBC_2.2.5>
 mov    rdx, rax
 mov    eax, 0x400bf8
