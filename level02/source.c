@@ -23,7 +23,7 @@ int main()
     pass_file_text[var] = 0;
     if (var != 29)
     {
-        fwrite("ERROR: failed to read password file\n", 24 ,stderr);
+        fwrite("ERROR: failed to read password file\n", 1, 24 ,stderr);
         exit(1);
     }
 
@@ -43,6 +43,14 @@ int main()
     fgets(password, 100, stdin);
     int res = strcspn(password, "\n");
     password[res] = 0;
+    puts("***************************************");
 
-    
+    if (strncmp(password, pass_file_text, 41) == 0)
+    {
+        printf("Greetings, %s!\n", username);
+        system("/bin/sh");
+    }
+    printf(username);
+    puts(" does not have access!");
+    exit(1);
 }

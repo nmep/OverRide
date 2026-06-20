@@ -50,11 +50,11 @@ mov    rcx, rdx
 mov    edx, 0x24
 mov    esi, 0x1
 mov    rdi, rax
-call   0x400720 <fwrite@plt>; fwrite("ERROR: failed to open password file\n",  24,  stderr);
+call   0x400720 <fwrite@plt>; fwrite("ERROR: failed to open password file\n", 1, 24, stderr);
 mov    edi, 0x1
 call   0x400710 <exit@plt>; exit(1)
 
-<main+210>  
+<main+210>
 lea    rax, [rbp-0xa0]; pass_file_text
 mov    rdx, QWORD PTR [rbp-0x8]; fd_pass_file
 mov    rcx, rdx; fd_pass_file
@@ -148,24 +148,28 @@ mov    edx, 0x29; 41
 mov    rsi, rcx
 mov    rdi, rax
 call   0x400670 <strncmp@plt>
+
 test   eax, eax
 jne    0x400a96 <main+642>
-mov    eax, 0x400d22
-lea    rdx, [rbp-0x70]
+
+mov    eax, 0x400d22; "Greetings, %s!\n"
+lea    rdx, [rbp-0x70]; username
 mov    rsi, rdx
 mov    rdi, rax
 mov    eax, 0x0
-call   0x4006c0 <printf@plt>
-mov    edi, 0x400d32
-call   0x4006b0 <system@plt>
+call   0x4006c0 <printf@plt>; printf("Greetings, %s!\n", username);
+mov    edi, 0x400d32; /bin/sh
+call   0x4006b0 <system@plt>; system("/bin/sh")
 mov    eax, 0x0
 leave
 ret
-lea    rax, [rbp-0x70]
+
+<main+642>
+lea    rax, [rbp-0x70]; username
 mov    rdi, rax
 mov    eax, 0x0
-call   0x4006c0 <printf@plt>
-mov    edi, 0x400d3a
-call   0x400680 <puts@plt>
+call   0x4006c0 <printf@plt>; printf(username); /!\ string format
+mov    edi, 0x400d3a; " does not have access!"
+call   0x400680 <puts@plt>; puts(" does not have access!")
 mov    edi, 0x1
-call   0x400710 <exit@plt>
+call   0x400710 <exit@plt>; exit(1);
