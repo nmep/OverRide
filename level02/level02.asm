@@ -58,7 +58,7 @@ call   0x400710 <exit@plt>; exit(1)
 lea    rax, [rbp-0xa0]; pass_file_text
 mov    rdx, QWORD PTR [rbp-0x8]; fd_pass_file
 mov    rcx, rdx; fd_pass_file
-mov    edx, 0x29; 29
+mov    edx, 0x29;
 mov    esi, 0x1
 mov    rdi, rax; pass_file_text -> #1 arg
 call   0x400690 <fread@plt>; fread(pass_file_text,  1,  29,  fd_pass_file);

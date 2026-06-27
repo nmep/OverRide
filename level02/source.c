@@ -12,7 +12,7 @@ int main()
     fd_pass_file = fopen("/home/users/level03/.pass", "r");
     if (fd_pass_file == 0)
     {
-        fwrite("ERROR: failed to open password file\n", 24, stderr);
+        fwrite("ERROR: failed to open password file\n", 1, 24, stderr);
         exit(1);
     }
 

