@@ -1,0 +1,21 @@
+syscall utilise
+
+level03@OverRide:~$ ltrace ./level03 
+__libc_start_main(0x804885a, 1, -10300, 0x80488f0, 0x8048960 <unfinished ...>
+time(NULL)                                                            = 1782662142
+srand(0x6a4143fe, 0xf7e5ed56, 0xf7fceff4, 0xf7e5ede5, 0xf7feb620)     = 0
+puts("********************************"...***********************************
+)                           = 36
+puts("*\t\tlevel03\t\t**"*		level03		**
+)                                            = 15
+puts("********************************"...***********************************
+)                           = 36
+printf("Password:")                                                   = 9
+__isoc99_scanf(0x8048a85, -10468, 0xf7fceff4, 0xf7e5ede5, 0xf7feb620Password:qwer
+) = 0
+rand(0xf7fcfac0, 0x8048a85, -10492, 0, -10456)                        = 0x1f111403
+puts("\nInvalid Password"
+Invalid Password
+)                                            = 18
++++ exited (status 0) +++
+
