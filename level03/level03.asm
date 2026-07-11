@@ -29,24 +29,26 @@ decrypt:
       <+82>:	repnz scas al,BYTE PTR es:[edi]; al = 0; while es:[edi] != al; ecx--; 
 
       <+84>:	mov    eax,ecx; ecx -18
-      <+86>:	not    eax; tester not et comprendre les soustractions not(x) = -x -1; askip et askip aussi c'est un bitwise
-      <+88>:	sub    eax,0x1; -19
-      <+91>:	mov    DWORD PTR [ebp-0x24],eax
-      <+94>:	mov    DWORD PTR [ebp-0x28],0x0
+      <+86>:	not    eax; -(-18) - 1 = 17 tester not et comprendre les soustractions not(x) = -x -1; askip et askip aussi c'est un bitwise
+      <+88>:	sub    eax,0x1; 16
+      <+91>:	mov    DWORD PTR [ebp-0x24],eax; size_len
+      <+94>:	mov    DWORD PTR [ebp-0x28],0x0; i
       <+101>:	jmp    0x80486e5 <decrypt+133>
-      <+103>:	lea    eax,[ebp-0x1d]
-      <+106>:	add    eax,DWORD PTR [ebp-0x28]
-      <+109>:	movzx  eax,BYTE PTR [eax]
-      <+112>:	mov    edx,eax
-      <+114>:	mov    eax,DWORD PTR [ebp+0x8]
-      <+117>:	xor    eax,edx
-      <+119>:	mov    edx,eax
-      <+121>:	lea    eax,[ebp-0x1d]
-      <+124>:	add    eax,DWORD PTR [ebp-0x28]
-      <+127>:	mov    BYTE PTR [eax],dl
-      <+129>:	add    DWORD PTR [ebp-0x28],0x1
-      <+133>:	mov    eax,DWORD PTR [ebp-0x28]
-      <+136>:	cmp    eax,DWORD PTR [ebp-0x24]
+
+            <+103>:	lea    eax,[ebp-0x1d]; var
+            <+106>:	add    eax,DWORD PTR [ebp-0x28]; add 0
+            <+109>:	movzx  eax,BYTE PTR [eax];
+            <+112>:	mov    edx,eax
+            <+114>:	mov    eax,DWORD PTR [ebp+0x8]; param1
+            <+117>:	xor    eax,edx
+            <+119>:	mov    edx,eax
+            <+121>:	lea    eax,[ebp-0x1d]
+            <+124>:	add    eax,DWORD PTR [ebp-0x28]
+            <+127>:	mov    BYTE PTR [eax],dl
+            <+129>:	add    DWORD PTR [ebp-0x28],0x1; i++
+
+      <+133>:	mov    eax,DWORD PTR [ebp-0x28]; 0
+      <+136>:	cmp    eax,DWORD PTR [ebp-0x24]; num
       <+139>:	jb     0x80486c7 <decrypt+103>
       <+141>:	lea    eax,[ebp-0x1d]
       <+144>:	mov    edx,eax
@@ -63,6 +65,7 @@ decrypt:
       <+174>:	movsx  eax,al
       <+177>:	test   eax,eax
       <+179>:	jne    0x8048723 <decrypt+195>
+
       <+181>:	mov    DWORD PTR [esp],0x80489d4
       <+188>:	call   0x80484e0 <system@plt>
 

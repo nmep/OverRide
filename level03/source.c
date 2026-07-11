@@ -2,24 +2,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void    decrypt()
+void    decrypt(int nb)
 {
     char var[17] = "Q}|u`sfg~sf{}|a3";
-    int num = -1;
+    int size_len = 0;
     int i = 0;
 
-    while (var[i] != 0)
+    size_len = strlen(var);
+    while (size_len > i)
     {
-        num--;
         i++;
     }
-
 }
 
 void test(int variable, int 0x1337d00d)
 {
     int res = 0x1337d00d - variable;
-    res <<= 2;    
+    res <<= 2;
     res += 0x80489f0;
 
     switch( res )
