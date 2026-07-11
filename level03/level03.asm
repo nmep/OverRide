@@ -4,29 +4,33 @@ decrypt:
       <+3>:	      push   edi
       <+4>:	      push   esi
       <+5>:	      sub    esp,0x40
-      <+8>:	      mov    eax,gs:0x14
-      <+14>:	mov    DWORD PTR [ebp-0xc],eax
+
+      <+8>:	      mov    eax,gs:0x14; canary
+      <+14>:	mov    DWORD PTR [ebp-0xc],eax; 
       <+17>:	xor    eax,eax
-      <+19>:	mov    DWORD PTR [ebp-0x1d],0x757c7d51
-      <+26>:	mov    DWORD PTR [ebp-0x19],0x67667360
-      <+33>:	mov    DWORD PTR [ebp-0x15],0x7b66737e
-      <+40>:	mov    DWORD PTR [ebp-0x11],0x33617c7d
-      <+47>:	mov    BYTE PTR [ebp-0xd],0x0
-      <+51>:	push   eax  
+      <+19>:	mov    DWORD PTR [ebp-0x1d],0x757c7d51; 29
+      <+26>:	mov    DWORD PTR [ebp-0x19],0x67667360; 25
+      <+33>:	mov    DWORD PTR [ebp-0x15],0x7b66737e; 21
+      <+40>:	mov    DWORD PTR [ebp-0x11],0x33617c7d; 17
+      <+47>:	mov    BYTE PTR [ebp-0xd],0x0; char var[16] = "Q}|u`sfg~sf{}|a";
+      <+51>:	push   eax; 0
+
       <+52>:	xor    eax, eax
       <+54>:	je     0x804869b <decrypt+59>
-      <+56>:	add    esp, 0x4
+
+      <+56>:	add    esp, 0x4 // dead code ?
       <+59>:	pop    eax
       <+60>:	lea    eax,[ebp-0x1d]
-      <+63>:	mov    DWORD PTR [ebp-0x2c],0xffffffff
+      <+63>:	mov    DWORD PTR [ebp-0x2c],0xffffffff; num = 0xffffffff = -1;
       <+70>:	mov    edx,eax
       <+72>:	mov    eax,0x0
-      <+77>:	mov    ecx,DWORD PTR [ebp-0x2c]
+      <+77>:	mov    ecx,DWORD PTR [ebp-0x2c]; -1
       <+80>:	mov    edi,edx
-      <+82>:	repnz scas al,BYTE PTR es:[edi]
-      <+84>:	mov    eax,ecx
-      <+86>:	not    eax
-      <+88>:	sub    eax,0x1
+      <+82>:	repnz scas al,BYTE PTR es:[edi]; al = 0; while es:[edi] != al; ecx--; 
+
+      <+84>:	mov    eax,ecx; ecx -18
+      <+86>:	not    eax; tester not et comprendre les soustractions not(x) = -x -1; askip et askip aussi c'est un bitwise
+      <+88>:	sub    eax,0x1; -19
       <+91>:	mov    DWORD PTR [ebp-0x24],eax
       <+94>:	mov    DWORD PTR [ebp-0x28],0x0
       <+101>:	jmp    0x80486e5 <decrypt+133>
@@ -61,13 +65,17 @@ decrypt:
       <+179>:	jne    0x8048723 <decrypt+195>
       <+181>:	mov    DWORD PTR [esp],0x80489d4
       <+188>:	call   0x80484e0 <system@plt>
+
       <+193>:	jmp    0x804872f <decrypt+207>
+
       <+195>:	mov    DWORD PTR [esp],0x80489dc
       <+202>:	call   0x80484d0 <puts@plt>
+
       <+207>:	mov    esi,DWORD PTR [ebp-0xc]
       <+210>:	xor    esi,DWORD PTR gs:0x14
       <+217>:	je     0x8048740 <decrypt+224>
       <+219>:	call   0x80484c0 <__stack_chk_fail@plt>
+
       <+224>:	add    esp,0x40
       <+227>:	pop    esi
       <+228>:	pop    edi
@@ -93,85 +101,87 @@ test:
       <+31>:	mov    eax,DWORD PTR [ebp-0xc]
       <+34>:	shl    eax,0x2; res << 2
       <+37>:	add    eax,0x80489f0; res + 0x80489f0
-      <+42>:	mov    eax,DWORD PTR [eax]; *0x80489f0
+      <+42>:	mov    eax,DWORD PTR [eax]; 0x80489f0
+
       <+44>:	jmp    eax; jmp dans la fonction voir avec gdb
+      
       <+46>:	mov    eax,DWORD PTR [ebp-0xc]; res
       <+49>:	mov    DWORD PTR [esp],eax
       <+52>:	call   0x8048660 <decrypt>; decrypt(res)
-
       <+57>:	jmp    0x8048858 <test+273>
+
       <+62>:	mov    eax,DWORD PTR [ebp-0xc]
       <+65>:	mov    DWORD PTR [esp],eax
       <+68>:	call   0x8048660 <decrypt>
-
       <+73>:	jmp    0x8048858 <test+273>
+
       <+78>:	mov    eax,DWORD PTR [ebp-0xc]
       <+81>:	mov    DWORD PTR [esp],eax
       <+84>:	call   0x8048660 <decrypt>
-
       <+89>:	jmp    0x8048858 <test+273>
+
       <+94>:	mov    eax,DWORD PTR [ebp-0xc]
       <+97>:	mov    DWORD PTR [esp],eax
       <+100>:	call   0x8048660 <decrypt>
-
       <+105>:	jmp    0x8048858 <test+273>
+
       <+110>:	mov    eax,DWORD PTR [ebp-0xc]
       <+113>:	mov    DWORD PTR [esp],eax
       <+116>:	call   0x8048660 <decrypt>
-
       <+121>:	jmp    0x8048858 <test+273>
+
       <+126>:	mov    eax,DWORD PTR [ebp-0xc]
       <+129>:	mov    DWORD PTR [esp],eax
       <+132>:	call   0x8048660 <decrypt>
-
       <+137>:	jmp    0x8048858 <test+273>
+
       <+142>:	mov    eax,DWORD PTR [ebp-0xc]
       <+145>:	mov    DWORD PTR [esp],eax
       <+148>:	call   0x8048660 <decrypt>
-
       <+153>:	jmp    0x8048858 <test+273>
+
       <+155>:	mov    eax,DWORD PTR [ebp-0xc]
       <+158>:	mov    DWORD PTR [esp],eax
       <+161>:	call   0x8048660 <decrypt>
-
       <+166>:	jmp    0x8048858 <test+273>
+
       <+168>:	mov    eax,DWORD PTR [ebp-0xc]
       <+171>:	mov    DWORD PTR [esp],eax
       <+174>:	call   0x8048660 <decrypt>
-
       <+179>:	jmp    0x8048858 <test+273>
+
       <+181>:	mov    eax,DWORD PTR [ebp-0xc]
       <+184>:	mov    DWORD PTR [esp],eax
       <+187>:	call   0x8048660 <decrypt>
-
       <+192>:	jmp    0x8048858 <test+273>
+
       <+194>:	mov    eax,DWORD PTR [ebp-0xc]
       <+197>:	mov    DWORD PTR [esp],eax
       <+200>:	call   0x8048660 <decrypt>
-
       <+205>:	jmp    0x8048858 <test+273>
+
       <+207>:	mov    eax,DWORD PTR [ebp-0xc]
       <+210>:	mov    DWORD PTR [esp],eax
       <+213>:	call   0x8048660 <decrypt>
-
       <+218>:	jmp    0x8048858 <test+273>
+
       <+220>:	mov    eax,DWORD PTR [ebp-0xc]
       <+223>:	mov    DWORD PTR [esp],eax
       <+226>:	call   0x8048660 <decrypt>
-
       <+231>:	jmp    0x8048858 <test+273>
+
       <+233>:	mov    eax,DWORD PTR [ebp-0xc]
       <+236>:	mov    DWORD PTR [esp],eax
       <+239>:	call   0x8048660 <decrypt>
-
       <+244>:	jmp    0x8048858 <test+273>
+
       <+246>:	mov    eax,DWORD PTR [ebp-0xc]
       <+249>:	mov    DWORD PTR [esp],eax
       <+252>:	call   0x8048660 <decrypt>
-
       <+257>:	jmp    0x8048858 <test+273>
-      <+259>:	call   0x8048520 <rand@plt>
 
+
+      <+259>:	call   0x8048520 <rand@plt>
       <+264>:	mov    DWORD PTR [esp],eax
       <+267>:	call   0x8048660 <decrypt>
 
