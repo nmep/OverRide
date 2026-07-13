@@ -12,7 +12,7 @@ decrypt:
       <+26>:	mov    DWORD PTR [ebp-0x19],0x67667360; 25
       <+33>:	mov    DWORD PTR [ebp-0x15],0x7b66737e; 21
       <+40>:	mov    DWORD PTR [ebp-0x11],0x33617c7d; 17
-      <+47>:	mov    BYTE PTR [ebp-0xd],0x0; char var[16] = "Q}|u`sfg~sf{}|a";
+      <+47>:	mov    BYTE PTR [ebp-0xd],0x0; char buff[16] = "Q}|u`sfg~sf{}|a";
       <+51>:	push   eax; 0
 
       <+52>:	xor    eax, eax
@@ -35,24 +35,26 @@ decrypt:
       <+94>:	mov    DWORD PTR [ebp-0x28],0x0; i
       <+101>:	jmp    0x80486e5 <decrypt+133>
 
-            <+103>:	lea    eax,[ebp-0x1d]; var
-            <+106>:	add    eax,DWORD PTR [ebp-0x28]; add 0
-            <+109>:	movzx  eax,BYTE PTR [eax];
-            <+112>:	mov    edx,eax
-            <+114>:	mov    eax,DWORD PTR [ebp+0x8]; param1
-            <+117>:	xor    eax,edx
-            <+119>:	mov    edx,eax
-            <+121>:	lea    eax,[ebp-0x1d]
-            <+124>:	add    eax,DWORD PTR [ebp-0x28]
-            <+127>:	mov    BYTE PTR [eax],dl
+            <+103>:	lea    eax,[ebp-0x1d]; eax = buff
+            <+106>:	add    eax,DWORD PTR [ebp-0x28]; add i to buff to take buff[i]
+            <+109>:	movzx  eax,BYTE PTR [eax]; eax = buff[i]
+            <+112>:	mov    edx,eax; edx = buff[i]
+            <+114>:	mov    eax,DWORD PTR [ebp+0x8]; eax = param1
+            <+117>:	xor    eax,edx; eax (nb) ^ edx (buff[i])1;
+            <+119>:	mov    edx,eax; edx = eax
+            <+121>:	lea    eax,[ebp-0x1d]; eax = buff;
+            <+124>:	add    eax,DWORD PTR [ebp-0x28]; eax + i
+            <+127>:	mov    BYTE PTR [eax],dl; le bit le plus faible de edx est dans dl, donc le mettre dans "[eax]" revient a le mettre dans buff[i]
             <+129>:	add    DWORD PTR [ebp-0x28],0x1; i++
 
-      <+133>:	mov    eax,DWORD PTR [ebp-0x28]; 0
+      <+133>:	mov    eax,DWORD PTR [ebp-0x28]; i
       <+136>:	cmp    eax,DWORD PTR [ebp-0x24]; num
+
       <+139>:	jb     0x80486c7 <decrypt+103>
+      
       <+141>:	lea    eax,[ebp-0x1d]
       <+144>:	mov    edx,eax
-      <+146>:	mov    eax,0x80489c3
+      <+146>:	mov    eax,0x80489c3; "Congratulations!"
       <+151>:	mov    ecx,0x11
       <+156>:	mov    esi,edx
       <+158>:	mov    edi,eax
@@ -91,12 +93,12 @@ test:
       <+1>:	      mov    ebp,esp
       <+3>:	      sub    esp,0x28
 
-      <+6>:	      mov    eax,DWORD PTR [ebp+0x8]; variable
+      <+6>:	      mov    eax,DWORD PTR [ebp+0x8]; buffiable
       <+9>:	      mov    edx,DWORD PTR [ebp+0xc]; 0x1337d00d
       <+12>:	mov    ecx,edx
-      <+14>:	sub    ecx,eax; 0x1337d00d - variable
+      <+14>:	sub    ecx,eax; 0x1337d00d - buffiable
       <+16>:	mov    eax,ecx
-      <+18>:	mov    DWORD PTR [ebp-0xc],eax; res = 0x1337d00d - variable
+      <+18>:	mov    DWORD PTR [ebp-0xc],eax; res = 0x1337d00d - buffiable
 
       <+21>:	cmp    DWORD PTR [ebp-0xc], 0x15
       <+25>:	ja     0x804884a <test+259>
@@ -223,15 +225,15 @@ main:
       <+82>:	call   0x8048480 <printf@plt>; puts("Password:")
 
       <+87>:	mov    eax,0x8048a85; "%d"
-      <+92>:	lea    edx,[esp+0x1c]; variable[28]
+      <+92>:	lea    edx,[esp+0x1c]; buffiable[28]
       <+96>:	mov    DWORD PTR [esp+0x4],edx;
       <+100>:	mov    DWORD PTR [esp],eax; "%d"
-      <+103>:	call   0x8048530 <__isoc99_scanf@plt>; scanf(variable, "%d")
+      <+103>:	call   0x8048530 <__isoc99_scanf@plt>; scanf(buffiable, "%d")
 
       <+108>:	mov    eax,DWORD PTR [esp+0x1c]
       <+112>:	mov    DWORD PTR [esp+0x4],0x1337d00d
       <+120>:	mov    DWORD PTR [esp],eax
-      <+123>:	call   0x8048747 <test>; test(variable, 0x1337d00d);
+      <+123>:	call   0x8048747 <test>; test(buffiable, 0x1337d00d);
 
       <+128>:	mov    eax,0x0
       <+133>:	leave

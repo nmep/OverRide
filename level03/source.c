@@ -4,20 +4,28 @@
 
 void    decrypt(int nb)
 {
-    char var[17] = "Q}|u`sfg~sf{}|a3";
+    char buff[17] = "Q}|u`sfg~sf{}|a3";
     int size_len = 0;
     int i = 0;
 
-    size_len = strlen(var);
+    size_len = strlen(buff);
     while (size_len > i)
     {
+        // <+103>:	lea    eax,[ebp-0x1d]; buff
+        // <+106>:	add    eax,DWORD PTR [ebp-0x28]; add 0
+        // <+109>:	movzx  eax,BYTE PTR [eax];
+        // <+112>:	mov    edx,eax
+        // <+114>:	mov    eax,DWORD PTR [ebp+0x8]; param1
+        // <+117>:	xor    eax,edx
+        // <+119>:	mov    edx,eax
+        buff[i] = nb ^ buff[i];
         i++;
     }
 }
 
-void test(int variable, int 0x1337d00d)
+void test(int buffiable, int 0x1337d00d)
 {
-    int res = 0x1337d00d - variable;
+    int res = 0x1337d00d - buffiable;
     res <<= 2;
     res += 0x80489f0;
 
@@ -75,14 +83,14 @@ void test(int variable, int 0x1337d00d)
 
 int main()
 {
-    int variable;
+    int buffiable;
     srand(time(0));
     puts("***********************************");
     puts("*\t\tlevel03\t\t**");
     puts("***********************************");
     puts("Password:");
-    scanf("%d", variable);
-    test(variable, 0x1337d00d);
+    scanf("%d", buffiable);
+    test(buffiable, 0x1337d00d);
 
 
 }
