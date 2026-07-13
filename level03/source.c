@@ -23,74 +23,92 @@ void    decrypt(int nb)
     }
 }
 
-void test(int buffiable, int 0x1337d00d)
+void test(int password, int num)
 {
-    int res = 0x1337d00d - buffiable;
-    res <<= 2;
-    res += 0x80489f0;
+    num = num - password;
 
-    switch( res )
+    switch( num )
     {
         case 0:
-            decrypt(res);
+            decrypt(num);
             break;
         case 1:
-            decrypt(res);
+            decrypt(num);
             break;
         case 2:
-            decrypt(res);
+            decrypt(num);
             break;
         case 3:
-            decrypt(res);
+            decrypt(num);
             break;
         case 4:
-            decrypt(res);
+            decrypt(num);
             break;
         case 5:
-            decrypt(res);
+            decrypt(num);
             break;
         case 6:
-            decrypt(res);
+            decrypt(num);
             break;
         case 7:
-            decrypt(res);
+            decrypt(num);
             break;
         case 8:
-            decrypt(res);
+            decrypt(num);
             break;
         case 9:
-            decrypt(res);
+            decrypt(num);
             break;
         case 10:
-            decrypt(res);
+            decrypt(num);
             break;
         case 11:
-            decrypt(res);
+            decrypt(num);
             break;
         case 12:
-            decrypt(res);
+            decrypt(num);
             break;
         case 13:
-            decrypt(res);
+            decrypt(num);
             break;
         case 14:
-            decrypt(res);
+            decrypt(num);
+            break;
+        case 15:
+            decrypt(num);
+            break;
+        case 16:
+            decrypt(num);
+            break;
+        case 17:
+            decrypt(num);
+            break;
+        case 18:
+            decrypt(num);
+            break;
+        case 19:
+            decrypt(num);
+            break;
+        case 20:
+            decrypt(num);
+            break;
+        case 21:
+            decrypt(num);
             break;
     }
-    int rand_res = rand();
-    decrypt(rand_res);
+    decrypt(rand());
 }
 
 int main()
 {
-    int buffiable;
+    int password;
     srand(time(0));
     puts("***********************************");
     puts("*\t\tlevel03\t\t**");
     puts("***********************************");
     puts("Password:");
-    scanf("%d", buffiable);
-    test(buffiable, 0x1337d00d);
+    scanf("%d", password);
+    test(password, 322424845);
 
 
 }

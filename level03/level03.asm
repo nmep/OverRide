@@ -5,8 +5,7 @@ decrypt:
       <+4>:	      push   esi
       <+5>:	      sub    esp,0x40
 
-      <+8>:	      mov    eax,gs:0x14; canary
-      <+14>:	mov    DWORD PTR [ebp-0xc],eax; 
+; 
       <+17>:	xor    eax,eax
       <+19>:	mov    DWORD PTR [ebp-0x1d],0x757c7d51; 29
       <+26>:	mov    DWORD PTR [ebp-0x19],0x67667360; 25
@@ -93,26 +92,26 @@ test:
       <+1>:	      mov    ebp,esp
       <+3>:	      sub    esp,0x28
 
-      <+6>:	      mov    eax,DWORD PTR [ebp+0x8]; buffiable
-      <+9>:	      mov    edx,DWORD PTR [ebp+0xc]; 0x1337d00d
+      <+6>:	      mov    eax,DWORD PTR [ebp+0x8]; password
+      <+9>:	      mov    edx,DWORD PTR [ebp+0xc]; num (322424845)
       <+12>:	mov    ecx,edx
-      <+14>:	sub    ecx,eax; 0x1337d00d - buffiable
+      <+14>:	sub    ecx,eax; num = num - password
       <+16>:	mov    eax,ecx
-      <+18>:	mov    DWORD PTR [ebp-0xc],eax; res = 0x1337d00d - buffiable
+      <+18>:	mov    DWORD PTR [ebp-0xc],eax; num = 322424845 - password
 
       <+21>:	cmp    DWORD PTR [ebp-0xc], 0x15
       <+25>:	ja     0x804884a <test+259>
 
       <+31>:	mov    eax,DWORD PTR [ebp-0xc]
-      <+34>:	shl    eax,0x2; res << 2
-      <+37>:	add    eax,0x80489f0; res + 0x80489f0
+      <+34>:	shl    eax,0x2; num << 2
+      <+37>:	add    eax,0x80489f0; num + 0x80489f0
       <+42>:	mov    eax,DWORD PTR [eax]; 0x80489f0
 
       <+44>:	jmp    eax; jmp dans la fonction voir avec gdb
       
-      <+46>:	mov    eax,DWORD PTR [ebp-0xc]; res
+      <+46>:	mov    eax,DWORD PTR [ebp-0xc]; num
       <+49>:	mov    DWORD PTR [esp],eax
-      <+52>:	call   0x8048660 <decrypt>; decrypt(res)
+      <+52>:	call   0x8048660 <decrypt>; decrypt(num)
       <+57>:	jmp    0x8048858 <test+273>
 
       <+62>:	mov    eax,DWORD PTR [ebp-0xc]
@@ -185,7 +184,6 @@ test:
       <+252>:	call   0x8048660 <decrypt>
       <+257>:	jmp    0x8048858 <test+273>
 
-
       <+259>:	call   0x8048520 <rand@plt>
       <+264>:	mov    DWORD PTR [esp],eax
       <+267>:	call   0x8048660 <decrypt>
@@ -225,15 +223,15 @@ main:
       <+82>:	call   0x8048480 <printf@plt>; puts("Password:")
 
       <+87>:	mov    eax,0x8048a85; "%d"
-      <+92>:	lea    edx,[esp+0x1c]; buffiable[28]
+      <+92>:	lea    edx,[esp+0x1c]; password[28]
       <+96>:	mov    DWORD PTR [esp+0x4],edx;
       <+100>:	mov    DWORD PTR [esp],eax; "%d"
-      <+103>:	call   0x8048530 <__isoc99_scanf@plt>; scanf(buffiable, "%d")
+      <+103>:	call   0x8048530 <__isoc99_scanf@plt>; scanf(password, "%d")
 
       <+108>:	mov    eax,DWORD PTR [esp+0x1c]
-      <+112>:	mov    DWORD PTR [esp+0x4],0x1337d00d
+      <+112>:	mov    DWORD PTR [esp+0x4],322424845
       <+120>:	mov    DWORD PTR [esp],eax
-      <+123>:	call   0x8048747 <test>; test(buffiable, 0x1337d00d);
+      <+123>:	call   0x8048747 <test>; test(password, 322424845);
 
       <+128>:	mov    eax,0x0
       <+133>:	leave
