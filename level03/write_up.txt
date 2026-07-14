@@ -1,0 +1,48 @@
+Le programme prend une entree et la mets dans scanf il ne sera utilise que s'il est plus petit que 21
+aussi pour le switch qui est dans le code on veut qu'il soit entre 0 et 21 exclu
+
+Il xor alors chaque charactere d'une string ecrite en brute dans le code qui est "Q}|u`sfg~sf{}|a3"
+Pour trouver la bonne reponse il faut alors reverse le calcule a partir de ce que l'on a:
+
+la string "Q}|u`sfg~sf{}|a3" et le numero d'input qui est entre 0 et 21
+
+voir le programme reverse xor.c, si on le lance on voit que si l'input est 18 on obtient
+
+str n* 0 = [Q}|u`sfg~sf{}|a3]
+str n* 1 = [P|}targfrgz|}`2]
+str n* 2 = [S~wbqde|qdy~c1]
+str n* 3 = [R~vcped}pex~b0]
+str n* 4 = [Uyxqdwbczwbyxe7]
+str n* 5 = [Txypevcb{vc~xyd6]
+str n* 6 = [W{zsfu`axu`}{zg5]
+str n* 7 = [Vz{rgta`yta|z{f4]
+str n* 8 = [Yut}h{nov{nsuti;]
+str n* 9 = [Xtu|izonwzortuh:]
+str n* 10 = [[wvjylmtylqwvk9]
+str n* 11 = [Zvw~kxmluxmpvwj8]
+str n* 12 = []qpyljkrjwqpm?]
+str n* 13 = [\pqxm~kjs~kvpql>]
+str n* 14 = [_sr{n}hip}husro=]
+str n* 15 = [^rszo|ihq|itrsn<]
+str n* 16 = [Amlepcvwncvkmlq#]
+str n* 17 = [@lmdqbwvobwjlmp"]
+str n* 18 = [Congratulations!]  <----- ici
+str n* 19 = [Bnofs`utm`uhnor ]
+str n* 20 = [Eihatgrsjgroihu']
+str n* 21 = [Dhi`ufsrkfsnhit&]
+
+Il faut donc entree: 322424845 - 18 comme input et on obtiendra notre shell
+
+
+
+level03@OverRide:~$ ./level03 
+***********************************
+*               level03         **
+***********************************
+Password:322424827
+$ whoami
+level04
+$ cat /home/users/level04/.pass
+kgv3tkEb9h2mLkRsPkXRfc2mHbjMxQzvb2FrgKkf
+
+

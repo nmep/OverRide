@@ -5,7 +5,7 @@ decrypt:
       <+4>:	      push   esi
       <+5>:	      sub    esp,0x40
 
-; 
+
       <+17>:	xor    eax,eax
       <+19>:	mov    DWORD PTR [ebp-0x1d],0x757c7d51; 29
       <+26>:	mov    DWORD PTR [ebp-0x19],0x67667360; 25
@@ -57,7 +57,7 @@ decrypt:
       <+151>:	mov    ecx,0x11
       <+156>:	mov    esi,edx
       <+158>:	mov    edi,eax
-      <+160>:	repz cmps BYTE PTR ds:[esi],BYTE PTR es:[edi]
+      <+160>:	repz cmps BYTE PTR ds:[esi],BYTE PTR es:[edi]; strncmp(buff, "Congratulations!", 17);
       <+162>:	seta   dl
       <+165>:	setb   al
       <+168>:	mov    ecx,edx
@@ -65,7 +65,7 @@ decrypt:
       <+172>:	mov    eax,ecx
       <+174>:	movsx  eax,al
       <+177>:	test   eax,eax
-      <+179>:	jne    0x8048723 <decrypt+195>
+      <+179>:	jne    0x8048723 <decrypt+195>; if (!(strncmp(buff, "Congratulations!", 17)))
 
       <+181>:	mov    DWORD PTR [esp],0x80489d4
       <+188>:	call   0x80484e0 <system@plt>

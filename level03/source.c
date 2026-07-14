@@ -1,6 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 void    decrypt(int nb)
 {
@@ -21,6 +22,12 @@ void    decrypt(int nb)
         buff[i] = nb ^ buff[i];
         i++;
     }
+    if (!(strncmp(buff, "Congratulations!", 17)))
+    {
+        puts("\nInvalid Password");
+        return ;
+    }
+    system("/bin/sh");
 }
 
 void test(int password, int num)
@@ -109,6 +116,4 @@ int main()
     puts("Password:");
     scanf("%d", password);
     test(password, 322424845);
-
-
 }
